@@ -1,0 +1,38 @@
+{
+  "name": "claude-edit-gutter",
+  "displayName": "Claude Edit Gutter",
+  "description": "Shows Claude Code edits inside the open editor: quick-diff gutter marks (with inline peek) for non-git files, and a brief line highlight on just-edited lines. Installs its own Claude Code PostToolUse hook and settings.json wiring on first run -- no manual setup needed.",
+  "version": "0.0.1",
+  "publisher": "dswett",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "claude",
+    "claude code",
+    "diff",
+    "gutter",
+    "ai edits"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeEditGutter.approveAll",
+        "title": "Claude Edit Gutter: Approve All Claude Edits"
+      },
+      {
+        "command": "claudeEditGutter.showMenu",
+        "title": "Claude Edit Gutter: Review Pending Edits"
+      }
+    ]
+  }
+}
