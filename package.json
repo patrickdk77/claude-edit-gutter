@@ -2,9 +2,17 @@
   "name": "claude-edit-gutter",
   "displayName": "Claude Edit Gutter",
   "description": "Shows Claude Code edits inside the open editor: quick-diff gutter marks (with inline peek) for non-git files, and a brief line highlight on just-edited lines. Installs its own Claude Code PostToolUse hook and settings.json wiring on first run -- no manual setup needed.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "dswett",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patrickdk77/claude-edit-gutter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/patrickdk77/claude-edit-gutter/issues"
+  },
+  "homepage": "https://github.com/patrickdk77/claude-edit-gutter#readme",
   "engines": {
     "vscode": "^1.70.0"
   },

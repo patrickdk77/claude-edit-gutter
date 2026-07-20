@@ -358,6 +358,7 @@ function activate(context) {
         }
         list.push(cur);
         list.sort((x, y) => x.range.start.line - y.range.start.line);
+        blocks.delete(real); // re-insert so the just-edited file sorts last (most recent)
         setBlocks(real, list);
       }
     }, 400);
@@ -476,17 +477,18 @@ function activate(context) {
           description: 'clears current markings; new edits go unmarked',
           action: 'disable'
         });
-        for (const [real, list] of blocks.entries()) {
+        // Newest-edited file first.
+        for (const [real, list] of Array.from(blocks.entries()).reverse()) {
           items.push({
             label: real.replace(os.homedir(), '~'),
             kind: vscode.QuickPickItemKind.Separator
           });
-          list.forEach((blk, i) => {
-            items.push({
-              label: '$(edit) ' + path.basename(real) + ':' + (blk.range.start.line + 1),
-              detail: blk.diff.split('\n').slice(0, 2).join('  '),
-              action: 'goto', real: real, index: i
-            });
+          // Filter out duplicate edits to the same file: one entry per file.
+          const blk = list[0];
+          items.push({
+            label: '$(edit) ' + path.basename(real) + ':' + (blk.range.start.line + 1),
+            detail: blk.diff.split('\n').slice(0, 2).join('  '),
+            action: 'goto', real: real, index: 0
           });
         }
       }

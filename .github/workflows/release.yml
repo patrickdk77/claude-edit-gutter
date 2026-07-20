@@ -1,0 +1,35 @@
+name: Release
+
+# Push a version tag (e.g. `git tag v0.0.1 && git push origin v0.0.1`) to
+# build the extension and publish it as a GitHub Release with the .vsix
+# attached. Also runnable manually against an existing tag.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Package extension (.vsix)
+        run: npx --yes @vscode/vsce package
+
+      - name: Publish GitHub Release with the .vsix
+        uses: softprops/action-gh-release@v2
+        with:
+          files: '*.vsix'
+          generate_release_notes: true
+          fail_on_unmatched_files: true
